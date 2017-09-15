@@ -141,7 +141,7 @@ impl Package {
     }
 
     pub fn is_local(&self) -> bool {
-        self.manifest.summary().source_id().is_path()
+        self.manifest.debug_allowed() && self.manifest.summary().source_id().is_path()
     }
 }
 

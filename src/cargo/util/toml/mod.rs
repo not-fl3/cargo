@@ -393,6 +393,8 @@ pub struct TomlProject {
     cargo_features: Option<Vec<String>>,
     #[serde(rename = "im-a-teapot")]
     im_a_teapot: Option<bool>,
+    #[serde(rename = "force-release")]
+    force_release: Option<bool>,
     #[serde(rename = "always-optimize-deps")]
     always_optimize_deps: Option<bool>,
 
@@ -669,6 +671,7 @@ impl TomlManifest {
                                          workspace_config,
                                          features,
                                          project.im_a_teapot,
+                                         project.force_release,
                                          project.always_optimize_deps,
                                          me.clone());
         if project.license_file.is_some() && project.license.is_some() {

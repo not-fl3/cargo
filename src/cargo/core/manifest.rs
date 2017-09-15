@@ -35,6 +35,7 @@ pub struct Manifest {
     workspace: WorkspaceConfig,
     original: Rc<TomlManifest>,
     features: Features,
+    force_release: Option<bool>,
     im_a_teapot: Option<bool>,
     always_optimize_deps: Option<bool>,
 }
@@ -247,6 +248,7 @@ impl Manifest {
                workspace: WorkspaceConfig,
                features: Features,
                im_a_teapot: Option<bool>,
+               force_release: Option<bool>,
                always_optimize_deps: Option<bool>,
                original: Rc<TomlManifest>) -> Manifest {
         Manifest {
@@ -265,6 +267,7 @@ impl Manifest {
             features: features,
             original: original,
             im_a_teapot: im_a_teapot,
+            force_release: force_release,
             always_optimize_deps,
         }
     }
@@ -317,6 +320,10 @@ impl Manifest {
             summary: self.summary.map_source(to_replace, replace_with),
             ..self
         }
+    }
+
+    pub fn debug_allowed(&self) -> bool {
+        self.force_release.unwrap_or(false) == false
     }
 
     pub fn feature_gate(&self) -> CargoResult<()> {
